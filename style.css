@@ -1,62 +1,82 @@
-from flask import Flask, render_template, request, jsonify
+/* ======== GLOBAL STYLE ======== */
+body {
+    font-family: Arial, sans-serif;
+    background: #e9eef3;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
-# Buat instance Flask
-app = Flask(__name__)
+/* ======== CHAT CONTAINER LEBAR FULL ======== */
+#chat-container {
+    width: 90%;                /* Lebih lebar */
+    max-width: 900px;          /* Biar tidak terlalu besar di laptop wide */
+    height: 90vh;              /* Tinggi hampir full layar */
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px #aaa;
+    display: flex;
+    flex-direction: column;
+}
 
-@app.route("/")
-def home():
-    return render_template("index.html")
+/* ======== CHATBOX FULL HEIGHT ======== */
+#chatbox {
+    flex: 1;                    /* Mengisi seluruh ruang kosong */
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: #fdfdfd;
+    border-radius: 10px;
+}
 
-@app.route("/chat", methods=["POST"])
-def chat():
-    user = request.json["message"].lower()
+/* ======== PESAN USER ======== */
+.user {
+    background: #c8e6c9;
+    padding: 12px;
+    margin: 7px 0;
+    border-radius: 10px;
+    text-align: right;
+    font-size: 1.1rem;
+}
 
-    # ====== KERUSAKAN: PANAS / OVERHEAT ======
-    if any(word in user for word in ["panas", "overheat", "kok panas", "ga dingin", "cepet panas"]):
-        reply = (
-            "Laptop kamu overheat.\n"
-            "Solusi:\n"
-            "- Bersihkan kipas & ventilasi\n"
-            "- Ganti thermal paste\n"
-            "- Gunakan cooling pad\n"
-            "- Hindari penggunaan di kasur/sofa"
-        )
+/* ======== PESAN BOT ======== */
+.bot {
+    background: #e3f2fd;
+    padding: 12px;
+    margin: 7px 0;
+    border-radius: 10px;
+    font-size: 1.1rem;
+}
 
-    # ====== LEMOT / LAMBAT ======
-    elif any(word in user for word in ["lemot", "lambat", "slow", "ngelag"]):
-        reply = (
-            "Laptop lemot biasanya karena RAM kecil atau HDD rusak.\n"
-            "Solusi: Upgrade ke SSD + tambah RAM minimal 8GB."
-        )
+/* ======== INPUT AREA ======== */
+#input-area {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
 
-    # ====== MATI TOTAL ======
-    elif any(word in user for word in ["mati total", "ga nyala", "tidak nyala"]):
-        reply = (
-            "Mati total bisa disebabkan:\n"
-            "- Power IC rusak\n"
-            "- Charger rusak\n"
-            "- Motherboard short"
-        )
+input {
+    flex: 1;
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    border: 1px solid #aaa;
+}
 
-    # ====== LAYAR TIDAK TAMPIL ======
-    elif any(word in user for word in ["layar gelap", "ga nampil", "tidak tampil", "no display", "blank"]):
-        reply = (
-            "Layar tidak tampil bisa karena:\n"
-            "- Kabel fleksibel rusak/lepas\n"
-            "- LCD rusak\n"
-            "- Backlight mati\n"
-            "Tes dengan monitor eksternal untuk memastikan."
-        )
+button {
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    background: #4a8ef0;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
 
-    # ====== DEFAULT ======
-    else:
-        reply = (
-            "Maaf, saya belum menemukan solusi untuk masalah itu.\n"
-            "Coba jelaskan lebih detail ya."
-        )
-
-    return jsonify({"reply": reply})
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+button:hover {
+    background: #3b74c8;
+}
